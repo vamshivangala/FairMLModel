@@ -4,6 +4,8 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import pickle
+from sklearn.model_selection import train_test_split
+
 
 # Define column names based on the dataset description
 column_names = [
@@ -63,6 +65,20 @@ with open('scaler.pkl', 'wb') as file:
 
 # Save the processed dataset to a CSV file
 data.to_csv('german_credit_processed.csv', index=False)
+
+# Split the processed dataset into training (80%) and testing (20%) sets
+train_data, test_data = train_test_split(
+    data, test_size=0.2, stratify=data['Target'], random_state=42
+)
+
+# Save the training and testing sets to separate CSV files
+train_data.to_csv('german_credit_train.csv', index=False)
+test_data.to_csv('german_credit_test.csv', index=False)
+
+# Output a message indicating successful splitting
+print("Data splitting complete. Training data saved as 'german_credit_train.csv'.")
+print("Testing data saved as 'german_credit_test.csv'.")
+
 
 # Output a message indicating successful completion
 print("Data processing complete. Processed data saved as 'german_credit_processed.csv'.")
