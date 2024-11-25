@@ -3,6 +3,7 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import pickle
+from sklearn.model_selection import train_test_split
 
 # Define column names as per the dataset description
 column_names = [
@@ -60,6 +61,11 @@ with open('adult_scaler.pkl', 'wb') as f:
 
 # Save the processed data to a CSV file
 data.to_csv('adult_data_processed.csv', index=False)
+
+train_data, test_data = train_test_split(data, test_size=0.2, stratify=data['income'], random_state=42)
+train_data.to_csv('adult_train_data.csv', index=False)
+test_data.to_csv('adult_test_data.csv', index=False)
+
 
 print("Data preprocessing completed and saved to 'adult_data_processed.csv'.")
 print("Encodings saved to 'adult_categorical_encodings.pkl'.")
